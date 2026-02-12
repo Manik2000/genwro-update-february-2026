@@ -1,2 +1,3 @@
-# genwro-update-february-2026
-Slides with update status of my PhD
+# genwro.AI research update
+
+Slides describing my current research work.
