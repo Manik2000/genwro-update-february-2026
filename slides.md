@@ -130,13 +130,14 @@ $$p_i \approx \frac{1}{K}\sum_{k=1}^{K} [M_k(x)]_i$$
 
 Learn $p_\theta(x \mid \mathbf{c})$ where $\mathbf{c} \in [0,1]^C$ is the consensus vector.
 
-**Training:** Pairs $\{(x_i, \mathbf{p}(x_i))\}_{i=1}^N$.
+**Training:** Pairs $\{(x_i, \mathbf{p}(x_i))\}_{i=1}^N$ by minimizing the negative log-likelihood:
 
-<br/>
+$$\mathcal{L}_{\text{NF}} = -\frac{1}{N}\sum_{i=1}^{N} \log p_\theta(x_i \mid \mathbf{p}(x_i))$$
+
 
 **Counterfactual generation** &mdash; for target class $c'$:
 
-$$x' = \arg\min_x \; d(x_0, x) + \lambda \cdot \max\left(0, \; \tau - \log p_\theta(x' \mid \mathbf{e}_{c'})\right)$$
+$$x' = \arg\min_x \; d(x_0, x) + \lambda \cdot \max\left(0, \; \tau - \log p_\theta(x \mid \mathbf{e}_{c'})\right)$$
 
 where $\mathbf{e}_{c'} \in \{0,1\}^C$ is the one-hot vector for $c'$ and $\tau$ is the **median** of $\log p_\theta(x)$ over the training data.
 
@@ -184,11 +185,11 @@ $$\mathcal{C}_{c'} = \{\mathbf{p} : p_{c'} \geq \gamma\}, \quad \text{e.g. } \ga
 
 **Theoretical objective:**
 
-$$x' = \arg\min_x \; d(x_0, x) + \lambda \cdot \max\left(0, \; \tau - \mathbb{E}_{\mathbf{c} \sim \mathcal{C}_{c'}} \left[\log p_\theta(x' \mid \mathbf{c})\right]\right)$$
+$$x' = \arg\min_x \; d(x_0, x) + \lambda \cdot \max\left(0, \; \tau - \mathbb{E}_{\mathbf{c} \sim \mathcal{C}_{c'}} \left[\log p_\theta(x \mid \mathbf{c})\right]\right)$$
 
 **Approximation** with $L$ sampled vectors $\mathbf{c}_1, \ldots, \mathbf{c}_L \in \mathcal{C}_{c'}$:
 
-$$x' = \arg\min_x \; d(x_0, x) + \lambda \cdot \max\left(0, \; \tau - \frac{1}{L}\sum_{l=1}^{L} \log p_\theta(x' \mid \mathbf{c}_l)\right)$$
+$$x' = \arg\min_x \; d(x_0, x) + \lambda \cdot \max\left(0, \; \tau - \frac{1}{L}\sum_{l=1}^{L} \log p_\theta(x \mid \mathbf{c}_l)\right)$$
 
 </div>
 
